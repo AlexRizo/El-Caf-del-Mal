@@ -32,8 +32,9 @@ const UsuarioSchema = mongoose.Schema({
 });
 
 UsuarioSchema.methods.toJSON = function() {
-    const {__v, password, ...user} = this.toObject();
-    return user;
+    const {__v, password, _id:uid, ...user} = this.toObject();
+    
+    return Object.assign({ uid }, user);
 }
 
 export default mongoose.model('Usuario', UsuarioSchema);

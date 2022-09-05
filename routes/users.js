@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
+
 import { 
     usuariosDelete, 
     usuariosGet, 
@@ -8,7 +9,8 @@ import {
     usuariosPut 
 } from "../controllers/users.js";
 
-import { validarCampos } from "../middlewares/validar-campos.js";
+import { validarCampos, validarJWT, rol } from "../middlewares/index.js";
+
 import { correoValido, existeUsuarioId, rolValido } from "../helpers/db-validators.js";
 
 
@@ -31,6 +33,9 @@ router.post('/', [
 ],usuariosPost);
 
 router.delete('/:id', [
+    validarJWT,
+    // isAdmin,
+    rol('ADMIN_ROLE', 'VENTAS_ROLE'),
     check('id').custom(existeUsuarioId),
     validarCampos
 ], usuariosDelete);
@@ -38,5 +43,5 @@ router.delete('/:id', [
 router.patch('/', usuariosPatch);
 
 export {
-    router
+    router as userRouter
 }
