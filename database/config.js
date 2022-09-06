@@ -6,6 +6,8 @@ const dbConection = async() => {
             useNewUrlParser: true, // <-- no longer necessary
             useUnifiedTopology: true // <-- no longer necessary
         });
+        
+        mongoose.set('returnOriginal', false)
 
         console.log('DB status: ok');
     } catch (error) {

@@ -1,10 +1,16 @@
 import express from "express";
 import cors from "cors";
-import { userRouter } from "../routes/users.js";
+
 import path from "path";
 import { fileURLToPath, URL } from 'url';
+
 import { dbConection } from "../database/config.js";
+
+import { userRouter } from "../routes/users.js";
 import { authRouter } from "../routes/auth.js";
+import { categoriaRouter } from "../routes/categorias.js";
+
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,8 +20,11 @@ class Server {
         this.app = express();
         this._port = process.env.PORT;
 
-        this.usuariosPath = '/api/usuarios'
-        this.authPath = '/api/auth'
+        this.paths = {
+            auth: '/api/auth',
+            usuarios: '/api/usuarios',
+            categorias: '/api/categorias'
+        }
 
         // Conectar DB
         this.conectarDB();
@@ -43,8 +52,12 @@ class Server {
     }
 
     routes() {        
-        this.app.use(this.authPath, authRouter);
-        this.app.use(this.usuariosPath, userRouter);
+        this.app.use(this.paths.auth, authRouter);
+
+        this.app.use(this.paths.usuarios, userRouter);
+
+        this.app.use(this.paths.categorias, categoriaRouter);
+
 
         this.app.get('*', (req, res) => {
             res.sendFile(path.join(__dirname, '../public', '404.html'));
@@ -58,4 +71,6 @@ class Server {
     }
 }
 
-export {Server};
+export {
+    Server
+};
