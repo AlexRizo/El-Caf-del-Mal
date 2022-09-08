@@ -39,7 +39,7 @@ router.post('/', [
 router.put('/:id', [
     validarJWT,
     check('id').custom(existeCategoriaId),
-    check('nombre').custom(categoriaValida),
+    check('nombre', 'la categoría es obligatoria').not().isEmpty().custom(categoriaValida),
     validarCampos
 ], actualizarCategoria);
 
@@ -47,7 +47,7 @@ router.put('/:id', [
 router.delete('/:id', [
     validarJWT,
     rol('ADMIN_ROLE'),
-    check('id').custom(existeCategoriaId),
+    check('id', 'ID obligatorio').not().isEmpty().custom(existeCategoriaId),
     validarCampos
 ], borrarCategoria);
 

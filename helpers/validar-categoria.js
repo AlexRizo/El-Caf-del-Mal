@@ -3,8 +3,8 @@ import { Categoria } from "../models/index.js";
 const categoriaValida = async(categoria = '') => {
     // Verificar si la categoría existe;
     const nombre = categoria.toLocaleUpperCase()
-    const existCat = await Categoria.findOne({nombre});
-    
+    const existCat = await Categoria.findOne({nombre, estado: true});
+        
     if (existCat) {
         throw new Error(`La categoría ${nombre} ya existe`);
     }
@@ -13,7 +13,7 @@ const categoriaValida = async(categoria = '') => {
 const existeCategoriaId = async(id) => {
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
         const existeCategoria = await Categoria.findById( id ).exec();
-        if ( !existeCategoria ) {
+        if ( !existeCategoria || !existeCategoria.estado) {
             throw new Error(`No existe una categoría con el id ${id}`);
         }
     } else {
@@ -23,5 +23,5 @@ const existeCategoriaId = async(id) => {
 
 export {
     existeCategoriaId,
-    categoriaValida
+    categoriaValida,
 }

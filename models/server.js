@@ -9,6 +9,8 @@ import { dbConection } from "../database/config.js";
 import { userRouter } from "../routes/users.js";
 import { authRouter } from "../routes/auth.js";
 import { categoriaRouter } from "../routes/categorias.js";
+import { ProductoRouter } from "../routes/productos.js";
+import { buscarRouter } from "../routes/buscar.js";
 
 
 
@@ -23,7 +25,9 @@ class Server {
         this.paths = {
             auth: '/api/auth',
             usuarios: '/api/usuarios',
-            categorias: '/api/categorias'
+            categorias: '/api/categorias',
+            productos: '/api/productos',
+            buscar: '/api/buscar'
         }
 
         // Conectar DB
@@ -53,10 +57,10 @@ class Server {
 
     routes() {        
         this.app.use(this.paths.auth, authRouter);
-
         this.app.use(this.paths.usuarios, userRouter);
-
         this.app.use(this.paths.categorias, categoriaRouter);
+        this.app.use(this.paths.productos, ProductoRouter);
+        this.app.use(this.paths.buscar, buscarRouter);
 
 
         this.app.get('*', (req, res) => {
