@@ -27,7 +27,7 @@ const ProductoSchema = mongoose.Schema({
     estado: {
         type: Boolean,
         default: true,
-        required: true 
+        required: true
     },
     usuario: {
         type: mongoose.Schema.Types.ObjectId,
