@@ -27,8 +27,21 @@ const existeUsuarioId = async(id) => {
     }
 }
 
+/**
+ * Validar colecciones permitidas;
+ */
+const coleccionesPermitidas = (coleccion = '', colecciones = []) => {
+    const includ = colecciones.includes(coleccion);
+    if (!includ) {
+        throw new Error(`La coleccion ${coleccion} no es perminita`);
+    }
+
+    return true;
+}
+
 export{
     rolValido,
     correoValido,
     existeUsuarioId,
+    coleccionesPermitidas
 }

@@ -19,6 +19,9 @@ const ProductoSchema = mongoose.Schema({
         ref: 'Categoria',
         required: true
     },
+    img: {
+        type: String,
+    },
     disponible: {
         type: Boolean,
         default: true,
