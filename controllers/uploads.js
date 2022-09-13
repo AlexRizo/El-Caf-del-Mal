@@ -65,6 +65,10 @@ const mostrarImagen = async(req, res = response) => {
         }
     }
 
+    if ( modelo.img ) {
+        return res.redirect(modelo.img)
+    }
+
     res.sendFile(notImageFound);
 }
 
